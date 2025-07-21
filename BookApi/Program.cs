@@ -12,9 +12,11 @@ namespace BookApi
             var app = builder.Build();
 
             //add Mapping
-            app.MapControllers()
-           // app.MapGet("/", () => "Hello World!");
-
+            app.MapControllers();
+            app.MapGet("/", () =>
+            {
+                return Results.Redirect("/api/books");
+            });
             app.Run();
         }
     }
