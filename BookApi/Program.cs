@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+
 namespace BookApi
 {
     public class Program
@@ -8,8 +10,17 @@ namespace BookApi
 
             //add services
             builder.Services.AddControllers();
+            builder.Services.AddCors(Options =>
+            {
+                Options.AddPolicy("MyCors", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
+
+            app.UseCors("MyCors");
 
             //add Mapping
             app.MapControllers();
